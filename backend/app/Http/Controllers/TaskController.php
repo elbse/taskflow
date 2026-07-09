@@ -36,6 +36,21 @@ class TaskController extends Controller
         return response()->json($user->tasks()->with('users')->get());
     }
 
+    public function updateStatus($id)
+    {
+        $task = Task::findOrFail($id);
+
+        $validated = request()->validate([
+            'status'=>'required|in:pending,in_progress,completed',
+        
+        ]);
+
+        $task->status = $validated['status'];
+        $task->save();
+
+        return response()->json($task->load('users'));
+    }
+
     
 
 }

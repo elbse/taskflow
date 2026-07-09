@@ -12,3 +12,4 @@ Route::get('/user', function (Request $request) {
 Route::get('/users', [UserController::class, 'getEmployees']);
 Route::post('/tasks', [TaskController::class, 'store']);
 Route::get('/my-tasks/{userId}',[TaskController::class, 'myTasks']);
+Route::patch('/tasks/{id}/status', [TaskController::class, 'updateStatus']);
