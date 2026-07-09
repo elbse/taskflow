@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Models\User;
 
 class TaskController extends Controller
 {
@@ -26,6 +27,13 @@ class TaskController extends Controller
         $task->users()->sync($validated['user_ids']);
 
         return response()->json($task->load('users'), 201);
+    }
+
+    public function myTasks($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        return response()->json($user->tasks()->with('users')->get());
     }
 
     
