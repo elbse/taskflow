@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../api/client';
+import TicketCard from './TicketCard';
 
 export default function AdminBoard(){
     const [tasks, setTasks] = useState([]);
@@ -26,19 +27,19 @@ export default function AdminBoard(){
             <div>
                 <h3>Pending Tasks ({pendingTasks.length})</h3>
                 {pendingTasks.map((task)=>(
-                    <div key={task.id}>{task.title}</div>
+                    <TicketCard key={task.id} task={task} />
                 ))}
             </div>
             <div>
                 <h3>Progress Task ({inProgressTasks.length})</h3>
                 {inProgressTasks.map((task)=>(
-                    <div key={task.id}>{task.title}</div>
+                    <TicketCard key={task.id} task={task} />
                 ))}
             </div>
             <div>
                 <h3>Completed Task ({completedTasks.length})</h3>
                 {completedTasks.map((task)=>(
-                    <div key={task.id}>{task.title}</div>
+                    <TicketCard key={task.id} task={task} />
                 ))}
             </div>
         </div>
