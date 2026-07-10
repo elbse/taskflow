@@ -51,6 +51,11 @@ class TaskController extends Controller
         return response()->json($task->load('users'));
     }
 
+    public function index()
+    {
+        return response()->json(Task::with('users')->get());
+    }
+
     
 
 }
