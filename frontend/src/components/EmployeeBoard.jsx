@@ -8,10 +8,19 @@ export default function EmployeeBoard({ employeeId }) {
 
     const [tasks, setTasks] = useState([]);
 
+    const handleAdvance = (taskId, newStatus)=> {
+        apiClient.patch(`/tasks/${taskId}/status`, { status: newStatus })
+        .then((response)=>{
+            setTasks((prevTasks) => 
+                prevTasks.map((task) => task.id === taskId ? response.data : task));
+        })
+        .catch((error)=> console.error('Failed to update task status:', error));
+    }
+
     useEffect(() => {
 
         if(!employeeId) return;
-        
+
         apiClient.get(`/my-tasks/${employeeId}`)
             .then((response) => setTasks(response.data))
             .catch((error) => console.error('Failed to fetch tasks:', error));
@@ -28,7 +37,7 @@ export default function EmployeeBoard({ employeeId }) {
 
      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 2 }}>
         {tasks.map((task) => (
-            <TicketCard key={task.id} task={task} />
+            <TicketCard key={task.id} task={task} onAdvance={handleAdvance} />
         ))}
         {tasks.length === 0 && (
             <Typography sx={{ fontSize: 12, fontStyle: 'italic', color: 'text.secondary' }}>

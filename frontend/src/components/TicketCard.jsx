@@ -1,11 +1,19 @@
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import StatusChip from './StatusChip';
 import EmployeeAvatar from './EmployeeAvatar';
 
-export default function TicketCard({ task }) {
+export default function TicketCard({ task, onAdvance }) {
   const assignedUsers = task.users ?? [];
+
+  const nextStatus =
+    task.status === 'pending' ? 'in_progress' :
+    task.status === 'in_progress' ? 'completed' :
+    null;
+
+  const buttonLabel = task.status === 'pending' ? 'Start' : 'Complete';
 
   return (
     <Paper sx={{ p: 2.25, position: 'relative' }}>
@@ -43,8 +51,13 @@ export default function TicketCard({ task }) {
         </Box>
       </Box>
 
-      <Box sx={{ borderTop: '1px dashed', borderColor: 'divider', pt: 1.5 }}>
+      <Box sx={{ borderTop: '1px dashed', borderColor: 'divider', pt: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <StatusChip status={task.status} />
+        {onAdvance && nextStatus && (
+          <Button size="small" variant="contained" onClick={() => onAdvance(task.id, nextStatus)}>
+            {buttonLabel}
+          </Button>
+        )}
       </Box>
     </Paper>
   );
