@@ -1,8 +1,5 @@
 # Taskflow — Team Task & Workload Manager
 
-## Overview
-[1-2 sentences: what this app does, who it's for]
-
 ## Tech Stack
 - Backend: Laravel [version], MySQL, Spatie Laravel Permission
 - Frontend: React, Vite, MUI
