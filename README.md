@@ -4,10 +4,6 @@
 - Backend: Laravel [version], MySQL, Spatie Laravel Permission
 - Frontend: React, Vite, MUI
 
-## Setup Instructions
-[backend setup steps: composer install, .env config, migrate, etc.]
-[frontend setup steps: npm install, npm run dev]
-
 ## Architecture Decisions
 - Used Spatie Laravel Permission exclusively for roles, rather than the `role` 
   column suggested in the original schema, to avoid the "custom role field 
