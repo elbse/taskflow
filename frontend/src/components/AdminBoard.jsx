@@ -4,18 +4,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TicketCard from './TicketCard';
 
-export default function AdminBoard(){
+export default function AdminBoard({employees}){
     const [tasks, setTasks] = useState([]);
-    const [employees, setEmployees] = useState([]);
-
+   
     useEffect(() => {
         apiClient.get('/tasks')
             .then((response)=> setTasks(response.data))
             .catch((error)=> console.error('Failed to fetch tasks:', error));
 
-        apiClient.get('/users')
-            .then((response)=> setEmployees(response.data))
-            .catch((error)=> console.error('Failed to fetch employees:', error));
 
     
     }, []);
