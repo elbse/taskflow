@@ -1,7 +1,7 @@
 # Taskflow — Team Task & Workload Manager
 
 ## Tech Stack
-- Backend: Laravel [version], MySQL, Spatie Laravel Permission
+- Backend: Laravel, MySQL, Spatie Laravel Permission
 - Frontend: React, Vite, MUI
 
 ## Architecture Decisions
@@ -11,7 +11,7 @@
 - Added a 5th endpoint (`GET /api/tasks`) beyond the four specified, since 
   the Admin dashboard view requires seeing all tasks — implied but not 
   explicitly listed in the API spec.
-- [Add the "Add Employee" feature note — flag it as beyond brief scope]
+
 
 ## Known Limitations
 - Task status is tracked per-task, not per-assignee — when a task has 
