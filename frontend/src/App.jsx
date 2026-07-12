@@ -5,11 +5,16 @@ import apiClient from './api/client';
 import DispatchHeader from './components/DispatchHeader';
 import AdminBoard from './components/AdminBoard';
 import EmployeeBoard from './components/EmployeeBoard';
+import CreateTaskDrawer from './components/CreateTaskDrawer';
+import CreateEmployeeDrawer from './components/CreateEmployeeDrawer';
 
 function App() {
   const [mode, setMode] = useState('admin');
   const [employeeId, setEmployeeId] = useState(null);
   const [employees, setEmployees] = useState([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [employeeDrawerOpen, setEmployeeDrawerOpen] = useState(true);
 
   useEffect(() => {
     apiClient.get('/users')
@@ -32,16 +37,31 @@ function App() {
           employees={employees}
           employeeId={employeeId}
           onEmployeeChange={setEmployeeId}
-          onNewTask={() => {}}
+          onNewTask={() => setDrawerOpen(true)}
+          onNewEmployee={() => setEmployeeDrawerOpen(true)}
         />
 
         {mode === 'admin' ? (
-          <AdminBoard employees={employees} />
+          <AdminBoard refreshKey={refreshKey} />
         ) : (
           <EmployeeBoard employeeId={employeeId} />
         )}
       </Box>
-    </ThemeProvider>
+      <CreateTaskDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        employees={employees}
+        onTaskCreated={() => setRefreshKey((k) => k + 1)}
+      />
+      <CreateEmployeeDrawer
+        open={employeeDrawerOpen}
+        onClose={() => setEmployeeDrawerOpen(false)}
+        onEmployeeCreated={(newEmployee) => {
+          setEmployees((prev) => [...prev, newEmployee]);
+        }}
+      />
+      </ThemeProvider>
+
   );
 }
 

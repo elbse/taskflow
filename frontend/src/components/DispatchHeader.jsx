@@ -13,6 +13,7 @@ export default function DispatchHeader({
   employeeId,
   onEmployeeChange,
   onNewTask,
+  onNewEmployee,
 }) {
   return (
     <Box
@@ -67,9 +68,14 @@ export default function DispatchHeader({
         )}
 
         {mode === 'admin' && (
-          <Button variant="contained" onClick={onNewTask}>
-            + Create task
-          </Button>
+          <>
+            <Button variant="outlined" onClick={onNewEmployee}>
+              + Add employee
+            </Button>
+            <Button variant="contained" onClick={onNewTask}>
+              + Create task
+            </Button>
+          </>
         )}
 
         <ToggleButtonGroup

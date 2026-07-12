@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TicketCard from './TicketCard';
 
-export default function AdminBoard({employees}){
+export default function AdminBoard({refreshKey}){
     const [tasks, setTasks] = useState([]);
    
     useEffect(() => {
@@ -12,13 +12,19 @@ export default function AdminBoard({employees}){
             .then((response)=> setTasks(response.data))
             .catch((error)=> console.error('Failed to fetch tasks:', error));
 
-
-    
-    }, []);
+    }, [refreshKey]);
 
     const pendingTasks = tasks.filter((task) => task.status === 'pending');
     const inProgressTasks = tasks.filter((task) => task.status === 'in_progress');
     const completedTasks = tasks.filter((task) => task.status === 'completed');
+
+    const handleDelete = (taskId) => {
+    apiClient.delete(`/tasks/${taskId}`)
+        .then(() => {
+            setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+        })
+        .catch((error) => console.error('Failed to delete task:', error));
+    };
     
     return (
         <Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start' }}>
@@ -50,7 +56,7 @@ export default function AdminBoard({employees}){
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {completedTasks.map((task) => (
-                <TicketCard key={task.id} task={task} />
+                <TicketCard key={task.id} task={task} onDelete={handleDelete} />
                 ))}
             </Box>
             </Box>

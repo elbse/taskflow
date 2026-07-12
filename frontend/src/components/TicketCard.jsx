@@ -4,8 +4,10 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import StatusChip from './StatusChip';
 import EmployeeAvatar from './EmployeeAvatar';
+import IconButton from '@mui/material/IconButton';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
-export default function TicketCard({ task, onAdvance }) {
+export default function TicketCard({ task, onAdvance, onDelete }) {
   const assignedUsers = task.users ?? [];
 
   const nextStatus =
@@ -58,6 +60,16 @@ export default function TicketCard({ task, onAdvance }) {
             {buttonLabel}
           </Button>
         )}
+        {onDelete && (
+         <IconButton
+          size="small"
+          color="error"
+          onClick={() => onDelete(task.id)}
+          aria-label="delete task"
+        >
+          <DeleteOutlineIcon fontSize="small" />
+        </IconButton>
+      )}
       </Box>
     </Paper>
   );
